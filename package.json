@@ -1,0 +1,23 @@
+{
+  "name": "qup-repo",
+  "version": "1.0.0",
+  "description": "blazor project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jazzey23/qup-repo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jazzey23/qup-repo/issues"
+  },
+  "homepage": "https://github.com/Jazzey23/qup-repo#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3"
+  }
+}
