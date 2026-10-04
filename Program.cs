@@ -1,10 +1,13 @@
 using qup_repo.Components;
+using qup_repo.Services.Matchmaking;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddScoped<SimulatedMatchmakingService>();
 
 var app = builder.Build();
 
