@@ -1,0 +1,22 @@
+<PageTitle>Build the squad | q-&gt;up</PageTitle>
+
+<div class="form-page">
+    <SquadFinderIntro />
+    <EditForm EditContext="editContext" OnValidSubmit="FindTeammatesAsync" FormName="build-squad" class="mt-10 grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-[72px]">
+        <DataAnnotationsValidator />
+        <PlayerChecklist @ref="playerChecklist" Model="request" />
+        <section aria-label="Squad configuration">
+            <SquadCapacity Model="request" />
+            <ConnectionDetails Model="request" />
+            <div class="mt-[53px] flex items-center justify-between gap-3 border-t border-line pt-3.5 font-mono text-[9px] leading-[13.5px]">
+                <span class="text-muted">CHANNEL // SEA-COMP</span>
+                <span class="text-accent">@(result is not null ? "SQUAD ACQUIRED" : isSearching ? "ACQUIRING PLAYERS" : "READY TO TRANSMIT")</span>
+            </div>
+            <MatchmakingFeedback IsSearching="isSearching" Result="result" TeammatesNeeded="request.TeammatesNeeded" RegionCount="request.SelectedRegions.Count" />
+            <button type="submit" class="find-button mt-16" disabled="@isSearching">
+                <span>@(isSearching ? "Finding teammates…" : result is not null ? "Find again" : "Find teammates")</span>
+                <span class="font-mono text-[9px] tracking-normal">ENTER ↵</span>
+            </button>
+        </section>
+    </EditForm>
+</div>

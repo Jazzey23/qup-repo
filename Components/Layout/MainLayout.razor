@@ -1,23 +1,25 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+<div class="app-shell">
+    <header class="app-header">
+        <a href="/" class="flex items-center gap-2.5" aria-label="q up home">
+            <span class="flex size-[30px] items-center justify-center bg-accent">
+                <span class="crosshair-icon" aria-hidden="true"><img src="assets/figma/crosshair.svg" alt="" /></span>
+            </span>
+            <span class="text-xl font-bold tracking-[0.5px]">q-&gt;up</span>
+        </a>
+        <div class="flex items-center gap-[18px] font-mono text-[9px] tracking-[1.2px] text-muted">
+            <span class="hidden sm:inline">NO ACCOUNT / ANONYMOUS CHANNEL</span>
+            <span class="size-1.5 bg-accent" aria-hidden="true"></span>
+            <span class="font-bold">01 / 03</span>
         </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    </header>
+    <main>@Body</main>
+    <footer class="app-footer">
+        <span>INTERACTIVE PREVIEW / SIMULATED MATCHMAKING</span>
+        <span>LESS WAITING. MORE PLAYING.</span>
+    </footer>
 </div>
-
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
+<div id="blazor-error-ui" role="alert">
+    Connection interrupted. <a href="" class="underline">Reload</a> to reconnect.
 </div>

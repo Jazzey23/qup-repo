@@ -1,0 +1,31 @@
+<div id="form-feedback" aria-live="polite">
+    <div role="alert"><ValidationSummary class="mt-4 font-mono text-xs text-accent" /></div>
+    @if (IsSearching || Result is not null)
+    {
+        <div class="mt-4 border border-line p-4">
+            <p class="eyebrow">@(IsSearching ? "Searching / simulated matchmaking" : "Squad ready / demo result")</p>
+            @if (Result is not null)
+            {
+                <p class="mt-3 text-sm text-muted">@Result.Teammates.Count teammates found for @Result.Game · @Result.Mode · @Result.Rank.</p>
+                <ul class="mt-3 space-y-2 font-mono text-xs">
+                    @foreach (var teammate in Result.Teammates)
+                    {
+                        <li @key="teammate" class="flex justify-between border-t border-line pt-2"><span>@teammate</span><span class="text-success">READY</span></li>
+                    }
+                </ul>
+                <p class="mt-3 text-xs text-muted">This preview uses simulated players. No real matchmaking request was sent.</p>
+            }
+            else
+            {
+                <p class="mt-3 text-sm text-muted">Acquiring @TeammatesNeeded teammates across @RegionCount regions…</p>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public bool IsSearching { get; set; }
+    [Parameter] public MatchmakingResult? Result { get; set; }
+    [Parameter] public int TeammatesNeeded { get; set; }
+    [Parameter] public int RegionCount { get; set; }
+}

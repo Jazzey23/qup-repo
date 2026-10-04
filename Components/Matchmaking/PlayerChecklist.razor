@@ -1,0 +1,42 @@
+<section aria-labelledby="checklist-title">
+    <div class="flex items-end justify-between gap-3">
+        <div>
+            <p class="eyebrow">Required parameters</p>
+            <h2 id="checklist-title" class="mt-1.5 whitespace-nowrap text-2xl font-bold leading-8 sm:text-[28px]">CHECKLIST / 05</h2>
+        </div>
+        <p class="pb-[5px] text-right font-mono text-[9px] text-dim">SELECT OR TYPE TO AMEND</p>
+    </div>
+    <div class="mt-11">
+        <ChecklistSelect Id="game" Number="01" Label="Game selection" @bind-Value="Model.Game" Options="MatchmakingOptions.Games" />
+        <div class="checklist-row">
+            <span class="field-number">02</span>
+            <div class="min-w-0 flex-1 py-3">
+                <label for="player-id" class="field-label">Player identifier</label>
+                <InputText id="player-id" class="checklist-input" placeholder="e.g., PlayerName#1234" @bind-Value="Model.PlayerId" maxlength="64" aria-describedby="form-feedback" />
+            </div>
+            <span class="at-sign-icon" aria-hidden="true"><img src="assets/figma/at-sign.svg" alt="" /></span>
+        </div>
+        <RegionSelector @ref="regionSelector" @bind-Value="Model.SelectedRegions" />
+        <ChecklistSelect Id="mode" Number="04" Label="Game mode" @bind-Value="Model.Mode" Options="MatchmakingOptions.Modes" />
+        <ChecklistSelect Id="rank" Number="05" Label="Your current rank" @bind-Value="Model.Rank" Options="MatchmakingOptions.Ranks" />
+    </div>
+    <div class="mt-11 flex items-start justify-between gap-4 border-t border-line pt-2 font-mono text-[9px]">
+        <span class="tracking-[1.1px] text-muted">FIND TEAMMATES ACROSS @Model.SelectedRegions.Count @(Model.SelectedRegions.Count == 1 ? "REGION" : "REGIONS")</span>
+        <button type="button" class="shrink-0 tracking-[0.5px] text-dim underline hover:text-accent" @onclick="UseDemoId">USE DEMO ID ↗</button>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public MatchmakingRequest Model { get; set; } = default!;
+    [CascadingParameter] private EditContext EditContext { get; set; } = default!;
+
+    private RegionSelector? regionSelector;
+
+    public void CloseRegions() => regionSelector?.Close();
+
+    private void UseDemoId()
+    {
+        Model.PlayerId = "PlayerName#1234";
+        EditContext.NotifyFieldChanged(FieldIdentifier.Create(() => Model.PlayerId));
+    }
+}

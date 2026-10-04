@@ -1,0 +1,21 @@
+<div class="mt-8 border border-line bg-panel/50 p-5">
+    <div class="flex items-center justify-between">
+        <h3 class="eyebrow">Connection details</h3>
+        <span class="font-mono text-[8px] tracking-[1px] text-dim">OPTIONAL</span>
+    </div>
+    <div class="mt-5 grid gap-5">
+        <div>
+            <label for="party-code" class="connection-label">In-game party code</label>
+            <InputText id="party-code" class="connection-input" placeholder="Paste your lobby's party code" @bind-Value="Model.PartyCode" maxlength="100" />
+        </div>
+        <div>
+            <label for="discord-invite" class="connection-label">Temporary Discord invite</label>
+            <InputText id="discord-invite" class="connection-input" placeholder="https://discord.gg/your-invite" @bind-Value="Model.DiscordInvite" maxlength="200" aria-describedby="discord-help form-feedback" />
+            <p id="discord-help" class="mt-2 text-[11px] leading-[17.875px] text-muted">Create the invite in Discord and set its expiration there.</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public MatchmakingRequest Model { get; set; } = default!;
+}

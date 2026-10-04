@@ -1,0 +1,28 @@
+@inherits InputBase<int>
+
+<fieldset class="min-w-0">
+    <legend class="mb-2.5 flex w-full items-start justify-between">
+        <span class="field-label pb-0 font-bold">@Label</span>
+        <span class="font-mono text-[9px] text-dim">@Hint</span>
+    </legend>
+    <div class="grid grid-cols-4 gap-2">
+        @for (var i = Minimum; i <= Maximum; i++)
+        {
+            var size = i;
+            <button type="button" class="size-button @(CurrentValue == size ? "selected" : "")" aria-label="@($"{Label}: {size}")" aria-pressed="@((CurrentValue == size).ToString().ToLowerInvariant())" @onclick="() => CurrentValue = size">@size</button>
+        }
+    </div>
+</fieldset>
+
+@code {
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public string Hint { get; set; } = "";
+    [Parameter] public int Minimum { get; set; }
+    [Parameter] public int Maximum { get; set; }
+    protected override bool TryParseValueFromString(string? value, out int result, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out string? validationErrorMessage)
+    {
+        var parsed = int.TryParse(value, out result);
+        validationErrorMessage = parsed ? null : "Select a valid squad size.";
+        return parsed;
+    }
+}

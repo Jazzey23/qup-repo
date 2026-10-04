@@ -1,0 +1,65 @@
+@inherits InputBase<HashSet<string>>
+
+<div class="checklist-row relative">
+    <span class="field-number">03</span>
+    <div class="min-w-0 flex-1 py-3">
+        <button id="region-toggle" type="button" class="relative block w-full text-left" aria-expanded="@(regionsOpen.ToString().ToLowerInvariant())" aria-controls="region-options" @onclick="() => regionsOpen = !regionsOpen">
+            <span class="field-label pb-0">Server / Region · Multi-select</span>
+            <span class="select-chevron region-chevron" aria-hidden="true"><img src="assets/figma/chevron-down.svg" alt="" /></span>
+        </button>
+        <div class="flex min-h-[30.5px] flex-wrap gap-1.5 pr-6 pt-[7px]">
+            @foreach (var region in MatchmakingOptions.Regions.Where(r => SelectedRegions.Contains(r.Code)))
+            {
+                <button type="button" class="region-chip" aria-label="Remove @region.Name" @onclick="() => ToggleRegion(region.Code)">
+                    @region.Code <span class="flex size-2.5 items-center justify-center"><img src="assets/figma/x.svg" alt="" /></span>
+                </button>
+            }
+            @if (SelectedRegions.Count == 0)
+            {
+                <button type="button" class="text-[17px] font-bold text-dim" @onclick="() => regionsOpen = true">Select a region</button>
+            }
+        </div>
+        @if (regionsOpen)
+        {
+            <fieldset id="region-options" class="region-menu">
+                <legend class="sr-only">Available server regions</legend>
+                @foreach (var region in MatchmakingOptions.Regions)
+                {
+                    <label class="flex cursor-pointer items-center gap-3 px-4 py-3 font-mono text-xs hover:bg-line">
+                        <input type="checkbox" class="accent-accent" checked="@SelectedRegions.Contains(region.Code)" @onchange="() => ToggleRegion(region.Code)" />
+                        @region.Name <span class="ml-auto text-dim">@region.Code</span>
+                    </label>
+                }
+                <button type="button" class="w-full border-t border-line px-4 py-3 text-left font-mono text-[10px] text-accent" @onclick="() => regionsOpen = false">DONE</button>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@code {
+    private bool regionsOpen;
+    private HashSet<string> SelectedRegions => CurrentValue ?? [];
+
+    public void Close()
+    {
+        regionsOpen = false;
+        StateHasChanged();
+    }
+
+    private void ToggleRegion(string code)
+    {
+        var regions = new HashSet<string>(SelectedRegions);
+        if (!regions.Add(code))
+        {
+            regions.Remove(code);
+        }
+        CurrentValue = regions;
+    }
+
+    protected override bool TryParseValueFromString(string? value, out HashSet<string> result, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out string? validationErrorMessage)
+    {
+        result = [];
+        validationErrorMessage = "Select regions using the region picker.";
+        return false;
+    }
+}

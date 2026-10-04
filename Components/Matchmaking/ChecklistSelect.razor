@@ -1,0 +1,29 @@
+@inherits InputBase<string>
+
+<div class="checklist-row">
+    <span class="field-number">@Number</span>
+    <div class="relative min-w-0 flex-1 py-3">
+        <label class="field-label" for="@Id">@Label</label>
+        <select id="@Id" class="checklist-input appearance-none pr-8 @CssClass" @attributes="AdditionalAttributes" @bind="CurrentValue">
+            @foreach (var option in Options)
+            {
+                <option @key="option" value="@option">@option</option>
+            }
+        </select>
+        <span class="select-chevron" aria-hidden="true"><img src="assets/figma/chevron-down.svg" alt="" /></span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Id { get; set; } = "";
+    [Parameter, EditorRequired] public string Number { get; set; } = "";
+    [Parameter, EditorRequired] public string Label { get; set; } = "";
+    [Parameter, EditorRequired] public IReadOnlyList<string> Options { get; set; } = [];
+
+    protected override bool TryParseValueFromString(string? value, out string result, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out string? validationErrorMessage)
+    {
+        result = value ?? "";
+        validationErrorMessage = null;
+        return true;
+    }
+}

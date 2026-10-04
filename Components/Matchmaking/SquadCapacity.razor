@@ -1,0 +1,29 @@
+<div class="flex items-center gap-2.5">
+    <span class="h-2.5 w-[30px] shrink-0 bg-accent" aria-hidden="true"></span>
+    <h2 class="font-mono text-[11px] font-bold uppercase leading-[16.5px] tracking-[1.8px] text-muted">Loadout sheet / squad acquisition</h2>
+</div>
+<p class="mt-6 font-mono text-[9px] uppercase leading-3 tracking-[1.4px] text-dim">Squad capacity calculation</p>
+<div class="mt-[53px] flex flex-col gap-4">
+    <SizeSelector Label="Current party size" Hint="INCLUDING YOU" Minimum="1" Maximum="4" @bind-Value="Model.PartySize" />
+    <SizeSelector Label="Desired squad size" Hint="5 MAX" Minimum="2" Maximum="5" @bind-Value="Model.SquadSize" />
+    <div>
+        <p class="field-label pb-0 font-bold">Squad slots</p>
+        <div class="flex gap-2 pt-2.5" aria-label="@($"{Model.PartySize} players in party, {Model.TeammatesNeeded} teammates needed")">
+            @for (var i = 1; i <= Model.SquadSize; i++)
+            {
+                <span class="squad-slot @(i <= Model.PartySize ? "filled" : "")">@i</span>
+            }
+        </div>
+    </div>
+    <div class="flex h-24 items-center gap-3" aria-live="polite">
+        <div class="calculation border-accent"><span>CURRENT PARTY</span><strong class="text-accent">@Model.PartySize.ToString("00")</strong></div>
+        <span class="font-mono text-lg text-dim">+</span>
+        <div class="calculation border-success"><span>NEEDED</span><strong class="text-success">@Model.TeammatesNeeded.ToString("00")</strong></div>
+        <span class="font-mono text-lg text-dim">=</span>
+        <div class="calculation border-line"><span>SQUAD TOTAL</span><strong>@Model.SquadSize.ToString("00")</strong></div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public MatchmakingRequest Model { get; set; } = default!;
+}

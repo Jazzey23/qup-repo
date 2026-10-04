@@ -1,1 +1,71 @@
 @import "tailwindcss";
+@source "../Components";
+
+@theme {
+    --color-canvas: #0f0f0c;
+    --color-panel: #14140f;
+    --color-line: #34342e;
+    --color-accent: #e3d52a;
+    --color-ink: #eeeadf;
+    --color-muted: #aaa79c;
+    --color-dim: #5b5b51;
+    --color-success: #61d787;
+
+    --font-sans: "Arimo", Arial, sans-serif;
+    --font-mono: "Roboto Mono", monospace;
+}
+
+@layer base {
+    body {
+        @apply bg-canvas font-sans text-ink;
+    }
+}
+@layer base {
+    html { color-scheme: dark; }
+    button, select { cursor: pointer; }
+    button, input, select, a { @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent; }
+    input::placeholder { @apply text-dim opacity-100; }
+    select option { @apply bg-panel text-ink; }
+    button:disabled { @apply cursor-wait opacity-60; }
+}
+
+@layer components {
+    .app-shell {
+        @apply relative mx-auto flex min-h-screen max-w-[1600px] flex-col border border-line bg-canvas;
+        background-image: linear-gradient(to right, transparent 39px, rgba(52,52,46,.55) 39px, rgba(52,52,46,.55) 40px, transparent 40px, transparent calc(100% - 40px), rgba(52,52,46,.55) calc(100% - 40px), rgba(52,52,46,.55) calc(100% - 39px), transparent calc(100% - 39px)), linear-gradient(to bottom, transparent 163px, rgba(52,52,46,.3) 163px, rgba(52,52,46,.3) 164px, transparent 164px);
+    }
+    .app-header { @apply flex h-[72px] shrink-0 items-center justify-between border-b border-line px-6 sm:px-10; }
+    .form-page { @apply px-6 py-12 sm:px-16; }
+    .hero-title { @apply mt-1.5 text-[42px] font-bold leading-[.94] tracking-[-2.8px] sm:text-[66px]; }
+    .eyebrow { @apply font-mono text-[9px] font-normal uppercase leading-3 tracking-[1.4px] text-accent; }
+    .checklist-row { @apply flex min-h-[74px] items-center gap-4 border-t border-line; }
+    .field-number { @apply w-[34px] shrink-0 font-mono text-[11px] font-bold text-accent; }
+    .field-label { @apply block pb-[7px] font-mono text-[9px] uppercase leading-[13.5px] tracking-[1.4px] text-muted; }
+    .checklist-input { @apply block h-6 w-full min-w-0 border-0 bg-transparent p-0 text-[17px] font-bold leading-6 text-ink; }
+    .select-chevron { @apply pointer-events-none absolute right-0 top-[26.25px] flex size-4 items-center justify-center; }
+    .region-chevron { top: 20.75px; }
+    .region-chip { @apply flex items-center gap-1.5 bg-accent px-2 py-[5px] font-mono text-[9px] font-bold leading-[13.5px] text-panel hover:bg-ink; }
+    .region-menu { @apply absolute inset-x-0 top-full z-20 border border-line bg-panel shadow-xl; }
+    .at-sign-icon { @apply flex size-4 shrink-0 items-center justify-center; mask-image: url('/assets/figma/at-sign-mask.svg'); mask-size: 16px 16px; }
+    .crosshair-icon { @apply flex size-[17px] items-center justify-center; mask-image: url('/assets/figma/crosshair-mask.svg'); mask-size: 17px 17px; }
+    .size-button { @apply h-[35.5px] border border-line bg-transparent font-mono text-[9px] text-muted transition-colors hover:border-accent; }
+    .size-button.selected { @apply border-accent font-bold text-accent; }
+    .squad-slot { @apply flex h-10 w-12 items-center justify-center border border-line bg-panel font-mono text-[9px] text-dim; }
+    .squad-slot.filled { @apply border-accent bg-accent font-bold text-panel; }
+    .calculation { @apply flex min-w-0 max-w-[110px] flex-1 flex-col items-center justify-center gap-[3px] border py-2.5 font-mono; }
+    .calculation span { @apply text-center text-[8px] leading-3 tracking-[1px] text-muted; }
+    .calculation strong { @apply text-2xl leading-9; }
+    .connection-label { @apply block font-mono text-[9px] uppercase leading-[13.5px] tracking-[1.2px] text-muted; }
+    .connection-input { @apply mt-2 block h-11 w-full border border-line bg-canvas px-3 font-mono text-xs text-ink; }
+    .find-button { @apply flex h-[58px] w-full items-center justify-between gap-3 border border-accent bg-accent px-[18px] text-sm font-bold uppercase tracking-[1.2px] text-panel transition-colors hover:bg-ink; }
+    .app-footer { @apply mt-auto flex flex-wrap justify-between gap-4 px-6 pb-5 font-mono text-[8px] leading-3 tracking-[1.1px] text-dim sm:px-16; }
+}
+
+@media (min-width: 1024px) {
+    .app-shell { min-height: 1271.547px; }
+    .form-page { padding-bottom: 44px; }
+}
+@media (max-width: 639px) {
+    .app-shell { background-image: none; }
+    .hero-title { letter-spacing: -1.8px; }
+}
